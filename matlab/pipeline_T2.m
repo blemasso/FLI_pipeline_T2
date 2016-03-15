@@ -34,7 +34,7 @@ str = char(raw');
 fclose(fid);
 data.json = JSON.parse(str);
 
-% Get information from the JASON data
+% Get information from the JSON data
 EchoTime = cell2num([data.json.EchoTime{:}]);
 
 % reshape the data to a vector matric (speed the fitting process)
