@@ -23,6 +23,7 @@ function pipeline_T2(MSE_map_filename, json_filename, threshold)
 %
 % Authors : B. Lemasson
 
+disp('warning: threshold hardcoded to 5')
 %% load input Nii file
 data.hdr = spm_vol(MSE_map_filename);
 data.img = spm_read_vols(data.hdr);
