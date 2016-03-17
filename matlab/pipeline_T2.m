@@ -122,6 +122,5 @@ M0_Error_map.hdr.pinfo = [1 0 352]';
 M0_Error_map.img(isnan(M0_Error_map.img)) = -1;
 spm_write_vol(M0_Error_map.hdr, M0_Error_map.img);
 
- toc
  
 
