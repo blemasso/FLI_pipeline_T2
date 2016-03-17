@@ -2,7 +2,7 @@
   "name": "pipeline_T2",
   "tool-version": "0.1",
   "description": "Pipeline for relaxometry T2 estimation",
-  "command-line": "./run_pipeline_T2.sh `pwd`/mcr/v81 [NIFTI_IMAGE] [JSON_FILE] [THRESHOLD]",
+  "command-line": "pipeline_T2.sh [NIFTI_IMAGE] [JSON_FILE] [THRESHOLD] [OUTPUT_ARCHIVE]",
   "docker-image": "glatard/pipeline_t2",
   "docker-index": "http://index.docker.io",
   "schema-version": "0.2",
@@ -34,31 +34,10 @@
   ],
   "output-files": [
     {
-      "id": "T2map",
-      "name": "T2 map",
-      "description": "T2 map",
-      "path-template": "T2map.nii",
-      "optional": false
-    },
-    {
-      "id": "M0_Error",
-      "name": "M0 error",
-      "description": "M0 error",
-      "path-template": "*-M0_Error.nii",
-      "optional": false
-    },
-    {
-      "id": "M0_map",
-      "name": "M0 map",
-      "description": "M0 map",
-      "path-template": "*-M0map.nii",
-      "optional": false
-    },
-    {
-      "id": "T2_Error",
-      "name": "T2 Error",
-      "description": "T2 Errpr",
-      "path-template": "*-T2_Error.nii",
+      "id": "output_archive",
+      "name": "Output files",
+      "description": "Output files",
+      "path-template": "[NIFTI_IMAGE].zip",
       "optional": false
     }
   ]
