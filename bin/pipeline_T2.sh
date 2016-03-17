@@ -13,6 +13,6 @@ fi
 
 OUTPUT_FILE=$4
 
-./run_pipeline_T2.sh $1 $2 $3 || die "Pipeline execution failed!"
+pipeline_T2 $1 $2 $3 || die "Pipeline execution failed!"
 
 zip -r $4 *-T2_Error.nii *-M0_Error.nii *-T2map.nii *-M0map.nii || die "Cannot zip output files!"
