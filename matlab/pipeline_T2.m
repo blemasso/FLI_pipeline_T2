@@ -47,7 +47,8 @@ T2_Error_map_tmp = NaN(size(data_to_fit,1),1);
 M0_Error_map_tmp = NaN(size(data_to_fit,1),1);
 
 % define the threshold and variables
-maxim=max(data_to_fit(:)) * threshold / 100;
+% maxim=max(data_to_fit(:)) * threshold / 100;
+maxim=max(data_to_fit(:)) * 0.05;
 t2init_Cte = EchoTime(1) - EchoTime(end-1);
 
 parfor voxel_nbr = 1:size(data_to_fit,1)
