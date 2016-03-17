@@ -23,7 +23,6 @@ function pipeline_T2(MSE_map_filename, json_filename, threshold)
 %
 % Authors : B. Lemasson
 
-disp('warning: threshold hardcoded to 5')
 %% load input Nii file
 data.hdr = spm_vol(MSE_map_filename);
 data.img = spm_read_vols(data.hdr);
@@ -48,8 +47,10 @@ T2_Error_map_tmp = NaN(size(data_to_fit,1),1);
 M0_Error_map_tmp = NaN(size(data_to_fit,1),1);
 
 % define the threshold and variables
-% maxim=max(data_to_fit(:)) * threshold / 100;
-maxim=max(data_to_fit(:)) * 0.05;
+ratio = double(threshold) / 100.0
+ratio_test = threshold/100
+maxim=max(data_to_fit(:)) * ratio;
+
 t2init_Cte = EchoTime(1) - EchoTime(end-1);
 
 parfor voxel_nbr = 1:size(data_to_fit,1)
