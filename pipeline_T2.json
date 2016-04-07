@@ -1,25 +1,26 @@
+
 {
   "name": "pipeline_T2",
-  "tool-version": "0.1",
-  "description": "Pipeline for relaxometry T2 estimation",
-  "command-line": "pipeline_T2.sh [NIFTI_IMAGE] [JSON_FILE] [THRESHOLD] [OUTPUT_ARCHIVE]",
+  "tool-version": "0.2",
+  "description": "Generate a T2_map from a MultiSpinEcho (MSE) sequence. <br><br><strong>Input</strong>: see hovers on parameters in the form below.<br><br><strong>Output</strong>:<ul><li>n = 4 volumes Nifti (3D images) in the same directory as the RAW data</li><li>If a value equal to -1: the voxel signal is below the threshold or the fitting algorithm did not converge</li><li>T2map: 3D image with T2 fitted values for each voxel</li><li>M0map: 3D image with M0 (fitted values (amplitude) for each voxel</li><li>T2_Error_map: 3D image with the error value on the T2 adjustment</li><li>M0_Error_map: 3D image with the error value on the M0 adjustment</li></ul><br><strong>Authors</strong>: B. Lemasson",
+  "command-line": "pipeline_T2.sh [IMAGE] [JSON_FILE] [THRESHOLD] [OUTPUT_ARCHIVE]",
   "docker-image": "glatard/pipeline_t2",
   "docker-index": "http://index.docker.io",
   "schema-version": "0.2",
   "inputs": [
     {
-      "id": "nifti_image",
-      "name": "Nifti image",
+      "id": "mse_map_filename",
+      "name": "MSE map filename",
       "type": "File",
-      "description": "A Nifti image",
-      "command-line-key": "[NIFTI_IMAGE]",
+      "description": "Dicom data (3D volume + 1D for echo values)",
+      "command-line-key": "[IMAGE]",
       "optional": false
     },
     {
       "id": "json_file",
       "name": "JSON file",
       "type": "File",
-      "description": "A JSON file",
+      "description": "Metadata associated with the the MSE_map",
       "command-line-key": "[JSON_FILE]",
       "optional": false
     },
@@ -27,7 +28,7 @@
       "id": "threshold",
       "name": "Threshold",
       "type": "Number",
-      "description": "A threshold value",
+      "description": "Number between 0 and 100 define the minimal signal rate needed for the fitting process",
       "command-line-key": "[THRESHOLD]",
       "optional": false
     }
@@ -37,7 +38,8 @@
       "id": "output_archive",
       "name": "Output files",
       "description": "Output files",
-      "path-template": "[NIFTI_IMAGE].zip",
+      "command-line-key": "[OUTPUT_ARCHIVE]",	
+      "path-template": "[IMAGE]-results.zip",
       "optional": false
     }
   ]
