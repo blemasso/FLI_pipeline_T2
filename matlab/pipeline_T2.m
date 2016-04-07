@@ -58,6 +58,10 @@ maxim=max(data_to_fit(:)) * threshold/100;
 
 t2init_Cte = EchoTime(1) - EchoTime(end-1);
 
+% init matlabpool
+schd = parcluster();
+poolobj = parpool('local', schd.NumWorkers);
+
 parfor voxel_nbr = 1:size(data_to_fit,1)
     tmp_voxel_data=data_to_fit(voxel_nbr,:);
     if max(tmp_voxel_data(:))>= maxim
@@ -79,6 +83,8 @@ parfor voxel_nbr = 1:size(data_to_fit,1)
         end
     end
 end
+
+delete(poolobj);
 
 % reshape matrix
 T2map.img=reshape(T2map_tmp,[size(data.img,1) size(data.img, 2) size(data.img,3)]);
