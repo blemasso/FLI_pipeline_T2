@@ -58,7 +58,11 @@ maxim=max(data_to_fit(:)) * threshold/100;
 
 t2init_Cte = EchoTime(1) - EchoTime(end-1);
 
-parfor voxel_nbr = 1:size(data_to_fit,1)
+init matlabpool
+schd = parcluster();
+poolobj = parpool('local', schd.NumWorkers);
+
+for voxel_nbr = 1:size(data_to_fit,1)
     tmp_voxel_data=data_to_fit(voxel_nbr,:);
     if max(tmp_voxel_data(:))>= maxim
         %% fit data
@@ -79,6 +83,9 @@ parfor voxel_nbr = 1:size(data_to_fit,1)
         end
     end
 end
+delete(poolobj);
+
+[~,filename,~] = fileparts(MSE_map_filename);
 
 % reshape matrix
 T2map.img=reshape(T2map_tmp,[size(data.img,1) size(data.img, 2) size(data.img,3)]);
@@ -88,9 +95,7 @@ M0_Error_map.img=reshape(M0_Error_map_tmp,[size(data.img,1) size(data.img, 2) si
 
 % save the T2 map
 T2map.hdr = spm_vol([MSE_map_filename, ', 1']);
-T2map.hdr.fname = char(strcat(data.json.PatientID, '-T2map.nii'));
-T2map.hdr.dt = [64 0];
-T2map.hdr.pinfo = [1 0 352]';
+T2map.hdr.fname = char(strcat(filename, '-T2map.nii'));
 T2map.img(T2map.img < 0) = -1;
 T2map.img(T2map.img > 5000) = -1;
 T2map.img(isnan(T2map.img)) = -1;
@@ -98,17 +103,13 @@ spm_write_vol(T2map.hdr, T2map.img);
 
 % save the M0map map
 M0map.hdr = spm_vol([MSE_map_filename, ', 1']);
-M0map.hdr.fname = char(strcat(data.json.PatientID, '-M0map.nii'));
-M0map.hdr.dt = [64 0];
-M0map.hdr.pinfo = [1 0 352]';
+M0map.hdr.fname = char(strcat(filename, '-M0map.nii'));
 M0map.img(isnan(M0map.img)) = -1;
 spm_write_vol(M0map.hdr, M0map.img);
 
 % save the T2_Error_map 
 T2_Error_map.hdr = spm_vol([MSE_map_filename, ', 1']);
-T2_Error_map.hdr.fname = char(strcat(data.json.PatientID, '-T2_Error.nii'));
-T2_Error_map.hdr.dt = [64 0];
-T2_Error_map.hdr.pinfo = [1 0 352]';
+T2_Error_map.hdr.fname = char(strcat(filename, '-T2_Error.nii'));
 T2_Error_map.img(T2_Error_map.img < 0) = -1;
 T2_Error_map.img(T2_Error_map.img > 50) = -1;
 T2_Error_map.img(isnan(T2_Error_map.img)) = -1;
@@ -116,9 +117,7 @@ spm_write_vol(T2_Error_map.hdr, T2_Error_map.img);
 
 % save the M0_Error_map map
 M0_Error_map.hdr = spm_vol([MSE_map_filename, ', 1']);
-M0_Error_map.hdr.fname = char(strcat(data.json.PatientID, '-M0_Error.nii'));
-M0_Error_map.hdr.dt = [64 0];
-M0_Error_map.hdr.pinfo = [1 0 352]';
+M0_Error_map.hdr.fname = char(strcat(filename, '-M0_Error.nii'));
 M0_Error_map.img(isnan(M0_Error_map.img)) = -1;
 spm_write_vol(M0_Error_map.hdr, M0_Error_map.img);
 
