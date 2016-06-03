@@ -6,7 +6,7 @@ function pipeline_T2(MSE_map_filename, json_filename, threshold)
 % Generate a T2_map from a MultiSpinEcho (MSE) sequence 
 %
 % Input = 
-%       MSE_map_filename = Dicom data (3D volume + 1D for echo values)
+%       MSE_map_filename = Nifti data (3D volume + 1D for echo values)
 %       json_filename = Metadata associated with the the MSE_map
 %       threshold       = Number between 0 and 100 define the minimal
 %       signal rate needed for the fitting process   
@@ -57,6 +57,7 @@ M0_Error_map_tmp = NaN(size(data_to_fit,1),1);
 maxim=max(data_to_fit(:)) * threshold/100;
 
 t2init_Cte = EchoTime(1) - EchoTime(end-1);
+
 
 init matlabpool
 schd = parcluster();
