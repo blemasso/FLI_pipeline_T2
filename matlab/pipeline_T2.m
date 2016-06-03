@@ -59,7 +59,7 @@ maxim=max(data_to_fit(:)) * threshold/100;
 t2init_Cte = EchoTime(1) - EchoTime(end-1);
 
 
-init matlabpool
+%init matlabpool
 schd = parcluster();
 poolobj = parpool('local', schd.NumWorkers);
 
