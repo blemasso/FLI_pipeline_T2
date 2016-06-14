@@ -1,10 +1,10 @@
 
 {
   "name": "pipeline_T2",
-  "tool-version": "0.2",
+  "tool-version": "0.3",
   "description": "Generate a T2_map from a MultiSpinEcho (MSE) sequence. <br><br><strong>Input</strong>: see hovers on parameters in the form below.<br><br><strong>Output</strong>:<ul><li>n = 4 volumes Nifti (3D images) in the same directory as the RAW data</li><li>If a value equal to -1: the voxel signal is below the threshold or the fitting algorithm did not converge</li><li>T2map: 3D image with T2 fitted values for each voxel</li><li>M0map: 3D image with M0 (fitted values (amplitude) for each voxel</li><li>T2_Error_map: 3D image with the error value on the T2 adjustment</li><li>M0_Error_map: 3D image with the error value on the M0 adjustment</li></ul><br><strong>Authors</strong>: B. Lemasson",
   "command-line": "pipeline_T2.sh [IMAGE] [JSON_FILE] [THRESHOLD] [OUTPUT_ARCHIVE]",
-  "docker-image": "glatard/pipeline_t2",
+  "docker-image": "viplatform/relaxo-blemasson",
   "docker-index": "http://index.docker.io",
   "schema-version": "0.2",
   "inputs": [
